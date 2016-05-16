@@ -119,6 +119,9 @@ class Leo_Quiz_Results {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-leo-quiz-results-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-quiz-results.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-departments.php';
+
 		$this->loader = new Leo_Quiz_Results_Loader();
 
 	}
@@ -151,6 +154,7 @@ class Leo_Quiz_Results {
 
 		$plugin_admin = new Leo_Quiz_Results_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'display_admin_page' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
@@ -169,7 +173,7 @@ class Leo_Quiz_Results {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
 	}
 
 	/**

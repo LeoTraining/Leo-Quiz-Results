@@ -2,3 +2,29 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+.leo-quiz-results table {
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse;
+	margin-top: 1em;
+}
+
+.leo-quiz-results table th,
+.leo-quiz-results table td {
+	padding: 5px 10px;
+	border: 1px solid #ddd;
+
+}
+
+.leo-quiz-results table tr:nth-of-type(even) {
+	background: #eee;
+}
+
+.leo-quiz-results table td.fail {
+	color: #a00;
+}
+
+.leo-quiz-results table td.pass {
+	color: #46B575;	
+}

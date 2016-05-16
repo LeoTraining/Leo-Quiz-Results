@@ -96,8 +96,26 @@ class Leo_Quiz_Results_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leo-quiz-results-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leo-quiz-results-public.js', array( 'jquery' ), $this->version, true );
 
 	}
 
+	public function register_shortcodes() {
+		add_shortcode('quiz-results', array($this, 'show_quiz_results'));
+	}
+
+	public function show_quiz_results() {
+		ob_start();
+		$this->quiz_results_view();
+		$output_string=ob_get_contents();;
+		ob_end_clean();
+		return $output_string;		
+	}
+
+	public function quiz_results_view() {
+		$departments = Departments::get_departments_current_user_is_head_of();
+		$qr = new Quiz_Results();
+
+		include __DIR__ . '/partials/leo-quiz-results-show-quiz-results.php';
+	}
 }

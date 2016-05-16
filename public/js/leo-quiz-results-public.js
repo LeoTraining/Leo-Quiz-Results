@@ -1,32 +1,109 @@
 (function( $ ) {
-	'use strict';
+	/* v1.2 by @gr33k01 */
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	var activeDialogue = {
 
+	    config: {
+	        modalSelector: '.modal',
+	        fireElement: '[data-fire]',
+	        closeElement: '.modal, .close-modal',
+	        nextButtonSelector: '.modal-next',
+	        prevButtonSelector: '.modal-prev',
+	    },
+
+	    // Consistent element order
+	    collection: [],
+	    
+	    // Prevent click + drag off modal closure.
+	    mouseDownHere: false,
+
+	    init: function(config) {
+	        // Allow overriding the default settings
+	        $.extend(activeDialogue.config, config);
+
+	        var modalSelector = activeDialogue.config.modalSelector,
+	            fireElement = activeDialogue.config.fireElement,
+	            close = activeDialogue.config.closeElement,
+	            nextBtn = activeDialogue.config.nextButtonSelector,
+	            prevBtn = activeDialogue.config.prevButtonSelector;
+
+	        // Collection of dialogue  elements
+	        var elements = (function() {
+	            var a = [];
+	            $(modalSelector).each(function() {
+	                a.push(this);
+	            });
+	            return a;
+	        }());
+
+	        activeDialogue.collection = elements;
+
+	        $(fireElement).on('click', activeDialogue.fire);
+	    
+	        $(close).on('mousedown', activeDialogue.close);
+	        $(close).on('mouseup', activeDialogue.close);
+	        $(nextBtn).on('click', activeDialogue.next);
+	        $(prevBtn).on('click', activeDialogue.previous);
+	    },
+
+	    fire: function(activeTarget) {
+	        // Allow only one active modal
+	        $(activeDialogue.config.modalSelector).css('display', 'none');
+
+	        $('.modal').each(function() {
+	            if ($(activeTarget.currentTarget).data('fire') == this.id) {
+	                $(this).css('display', 'block');
+	                $('body').addClass('active-modal');
+	                return false;
+	           
+	            }
+	        });
+	    },
+
+	    open: function(id) {
+	        // Allow only one active modal
+	        $(activeDialogue.config.modalSelector).css('display', 'none');
+	        $('#' + id).css('display', 'block');
+	        $('body').addClass('active-modal');
+	    },
+
+	    close: function(e) {
+	        // Return if child of selector is clicked
+	        if (e.target !== this) {
+	          
+	          // Prevent click + drag off modal closure.
+	          activeDialogue.config.mouseDownHere = false; 
+	          return;
+	        }
+	      
+	        // Prevent click + drag off modal closure.
+	        if(!activeDialogue.config.mouseDownHere){
+	           activeDialogue.config.mouseDownHere = true;
+	           return;
+	        }
+	      
+	        activeDialogue.config.mouseDownHere = false;
+	      
+	        $(activeDialogue.config.modalSelector).css('display', 'none');
+	        $('body').removeClass('active-modal');
+	    },
+
+	    next: function(e) {
+	        var index = activeDialogue.collection.indexOf($(this).closest('.modal')[0]) + 1;
+	        
+	        if (index >= activeDialogue.collection.length) index = 0;
+	        activeDialogue.open(activeDialogue.collection[index].id);
+	    },
+
+	    previous: function(e) {
+	        var index = activeDialogue.collection.indexOf($(this).closest('.modal')[0]) - 1;
+
+	        if (index < 0) index = activeDialogue.collection.length - 1;
+	        activeDialogue.open(activeDialogue.collection[index].id);
+	    }
+	}
+
+	activeDialogue.init();
 })( jQuery );
+
+

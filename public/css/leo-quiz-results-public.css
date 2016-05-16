@@ -2,3 +2,105 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .leo-quiz-results table {
+	border: 1px solid #ddd;
+	text-align: left;
+	border-collapse: collapse;
+	margin-top: 1em;
+}
+
+.leo-quiz-results table th,
+.leo-quiz-results table td {
+	padding: 5px 10px;
+	border: 1px solid #ddd;
+
+}
+
+.leo-quiz-results table tr:nth-of-type(even) {
+	background: #eee;
+}
+
+.leo-quiz-results table td.fail {
+	color: #a00;
+}
+
+.leo-quiz-results table td.pass {
+	color: #46B575;	
+}
+
+.qa {
+	padding: 1em;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	margin-top: 1em;
+}
+
+.qa:last-child {
+	margin-bottom: 0;
+}
+
+.answer {
+	margin-right: 10px;
+}
+
+.correct-answers {
+	opacity: .5;
+}
+
+.user-answers .answer {
+	color: #c0392b;
+}
+.user-answers .answer.correct {
+	color: #27ae60;
+}
+
+/* v1.2 by @gr33k01 */
+.active-modal {
+    overflow: hidden;
+}
+.modal-box:before,
+.modal-box:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+.modal-box:after {
+    clear: both;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    outline: 0;
+    overflow-y: scroll;
+    background: rgba(0, 0, 0, .4);
+    zoom: 1;
+}
+.modal-box {
+    width: 600px;
+    max-width: 100%;
+    display: block;
+    margin: 30px auto;
+    margin-top: 90px;
+    background: #ffffff;
+    padding: 3em;
+    border-radius: 5px;
+    clear: both;
+}
+.modal-next {
+    float: right;
+}
+.modal-prev {
+    float: left;
+}
+[data-fire],
+.modal-next,
+.modal-prev {
+    cursor: pointer;
+}

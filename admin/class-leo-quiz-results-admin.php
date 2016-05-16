@@ -1,5 +1,7 @@
 <?php
 
+// include(plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Numbers/Words.php');
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -100,4 +102,34 @@ class Leo_Quiz_Results_Admin {
 
 	}
 
+
+	/**
+	 * Displays the admin page
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_admin_page() {
+		add_menu_page(
+			'Quiz Results',
+			'Quiz Results',
+			'read',
+			'leo_quiz_results_admin',
+			array( $this, 'show_page' ),
+			'dashicons-chart-line',
+			'50.0'
+			);
+	}
+
+	/**
+	 * Includes the admin area display
+	 *
+	 * @since    1.0.0
+	 */
+	public function show_page() {
+		$qr = new Quiz_Results();
+		$departments = Departments::get_departments();
+		$department = Departments::get_department_by_id($_GET['leo_dept']);
+		$results = $qr->get_results_for_department($department);		
+		include __DIR__ . '/partials/leo-quiz-results-admin-display.php';
+	}
 }

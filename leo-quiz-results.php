@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Leo Quiz Results
  * Plugin URI:        https://github.com/gr33k01/Leo-Quiz-Results
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Custom admin view that shows quiz results by department.
  * Version:           1.0.0
  * Author:            Nate Hobi
  * Author URI:        https://github.com/gr33k01
