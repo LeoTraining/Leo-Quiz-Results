@@ -17,6 +17,10 @@ class Quiz_Results {
 		return $this->get_view_models($this->all_results);
 	}
 
+	public function get_all_quizzes() {
+		return $this->quizzes;
+	}
+
 	public function get_results_for_department($department) {
 		$results_arr = array();
 

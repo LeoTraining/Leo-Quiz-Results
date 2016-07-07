@@ -104,3 +104,13 @@
 .modal-prev {
     cursor: pointer;
 }
+
+.quiz-dropdown-heading {
+    margin-bottom: 0px;
+}
+#quiz-dropdown {
+    margin-bottom: 2em;
+}
+.quiz-name {
+    color: #208ac7;
+}

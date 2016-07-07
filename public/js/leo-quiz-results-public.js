@@ -104,6 +104,16 @@
 	}
 
 	activeDialogue.init();
-})( jQuery );
 
+	window.quizDropdownOnChange = function() {
+		var quizDropdown = document.getElementById('quiz-dropdown'),
+			quizId = quizDropdown.value;
+
+		if(quizId == '') {
+			window.location.href = window.location.pathname;
+		} else {
+			window.location.href = window.location.pathname + '?quiz_id=' + quizId;
+		}		
+	};
+})( jQuery );
 

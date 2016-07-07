@@ -107,14 +107,34 @@ class Leo_Quiz_Results_Public {
 	public function show_quiz_results() {
 		ob_start();
 		$this->quiz_results_view();
-		$output_string=ob_get_contents();;
+		$output_string = ob_get_contents();;
 		ob_end_clean();
+
 		return $output_string;		
 	}
 
 	public function quiz_results_view() {
-		$departments = Departments::get_departments_current_user_is_head_of();
+		$departments = Departments::get_departments_current_user_is_head_of();		
 		$qr = new Quiz_Results();
+		$quizzes = $qr->get_all_quizzes();
+
+		$quiz_filter_id = $_GET['quiz_id'];		
+		$has_filter = $quiz_filter_id != 'all';
+		$quiz_name = '';
+
+		// Set default to most recent quiz
+		if(!$_GET['quiz_id']) {
+			$quiz_filter_id = end($quizzes)->id;
+			$quiz_name = end($quizzes)->name;
+		}
+
+		if($has_filter) {
+			foreach($quizzes as $quiz) {
+				if($quiz->id == $quiz_filter_id) {					
+					$quiz_name = $quiz->name;
+				}
+			}
+		}
 
 		include __DIR__ . '/partials/leo-quiz-results-show-quiz-results.php';
 	}
