@@ -1,12 +1,12 @@
 <h3 class="quiz-dropdown-heading">Filter By Quiz</h3>
 
-<select onchange="quizDropdownOnChange()" id="quiz-dropdown">
-	<option value="all">All Quizzes</option>
-	<?php foreach($quizzes as $quiz) : ?>
+<select onchange="quizDropdownOnChange()" id="quiz-dropdown">	
+	<?php foreach(array_reverse($quizzes) as $quiz) : ?>
 	<option value="<?php echo $quiz->id; ?>" <?php if($quiz->id == $quiz_filter_id) echo 'selected="selected"'; ?>>
 		<?php echo $quiz->name; ?>
 	</option>
 	<?php endforeach; ?>
+	<option value="all" <?php if($_GET['quiz_id'] == 'all') echo 'selected="selected"'; ?>>All Quizzes</option>
 </select>
 
 <?php if($departments == null) : ?>
