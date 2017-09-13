@@ -114,18 +114,25 @@ class Leo_Quiz_Results_Public {
 	}
 
 	public function quiz_results_view() {
-		$departments = Departments::get_departments_current_user_is_head_of();		
-		$qr = new Quiz_Results();
+		$departments = Departments::get_departments_current_user_is_head_of();				
+		$qr = new Quiz_Results($departments[0]->ID);
 		$quizzes = $qr->get_all_quizzes();
 
-		$quiz_filter_id = $_GET['quiz_id'];		
+		$quiz_filter_id = isset($_GET['quiz_id']) ? $_GET['quiz_id'] : null;		
 		$has_filter = $quiz_filter_id != 'all';
 		$quiz_name = '';
 
 		// Set default to most recent quiz
 		if(!$_GET['quiz_id']) {
-			$quiz_filter_id = end($quizzes)->id;
-			$quiz_name = end($quizzes)->name;
+			$most_recent = $quizzes[0];
+
+			foreach($quizzes as $quiz) {
+				if(intval($quiz->id) > intval($most_recent->id)) {
+					$most_recent = $quiz;
+				}
+			}
+			$quiz_filter_id = $most_recent->id;
+			$quiz_name = $most_recent->name;
 		}
 
 		if($has_filter) {

@@ -1,3 +1,5 @@
+<?php
+?>
 <h1>Quiz Results By Department</h1>
 <hr />
 <section>
@@ -5,17 +7,18 @@
 	<select data-departments>
 		<option value="">Please Select a Department</option>
 		<?php foreach($departments as $dept) : ?>
-		<option value="<?php echo $dept['id']; ?>"
-			<?php if($department['id'] == $dept['id']) : ?>
+		<option value="<?php echo $dept->ID; ?>"
+			<?php if(intval($dept->ID) == intval($_GET['leo_dept'])) : ?>
 			selected="selected"
 			<?php endif; ?> >
-			<?php echo $dept['name']; ?></option>
+			<?php echo $dept->post_title; ?></option>
 		<?php endforeach; ?>		
 	</select>	
 </section>
 
 <hr />
 
+<?php if(isset($_GET['leo_dept'])) : ?>
 <section class="leo-quiz-results">
 	<?php if(count($results) == 0)  : ?>
 		<?php if(isset($_GET['leo_dept'])) : ?>
@@ -32,7 +35,7 @@
 			<th>Pass/Fail</th>			
 		</thead>
 		<tbody>
-			<?php foreach(array_reverse($results) as $r) : ?>
+			<?php foreach(array_reverse($results) as $r) :?>
 			<tr>
 				<td><a href="<?php echo $r['quiz_link']; ?>" target="_blank"><?php echo $r['quiz_name']; ?></a></td>
 				<td><a href="<?php echo $r['user_link']; ?>" target="_blank"><?php echo $r['user']->display_name; ?> (<?php echo $r['user']->user_email; ?>)</a></td>
@@ -48,7 +51,7 @@
 
 	<?php endif; ?>
 </section>
-
+<?php endif; ?>
 
 <script type="text/javascript">
 (function($){

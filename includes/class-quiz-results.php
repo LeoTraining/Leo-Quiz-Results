@@ -4,9 +4,27 @@ class Quiz_Results {
 	private $all_results;
 	private $quizzes;
 
-	public function __construct() {
+	public function __construct($department_id) {
 		global $wpdb;
-		$this->all_results = $wpdb->get_results( 'select * from wp_fsq_data', OBJECT );
+		
+		$users = get_users(array(
+			'meta_key'     => '_department',
+			'meta_value'   => intval($department_id),
+			'meta_compare' => '='
+		));
+		
+		$in = '';
+
+		foreach($users as $u) {
+			if($in == '') {
+				$in .= $u->ID;
+			} else {
+				$in .= (',' . $u->ID);
+			}
+		}
+		$sql = 'select * from wp_fsq_data where user_id IN(' . $in . ')';
+		
+		$this->all_results = $wpdb->get_results($sql , OBJECT );
 		$this->quizzes = $wpdb->get_results( 'select * from wp_fsq_form', OBJECT );
 	}
 
@@ -25,8 +43,8 @@ class Quiz_Results {
 		$results_arr = array();
 
 		foreach($this->all_results as $result) {				
-			$u_d = get_user_meta($result->user_id, 'department', true);				
-			if($u_d == strval($department['id'])) {
+			$u_d = get_user_meta($result->user_id, '_department', true);				
+			if(intval($u_d) == intval($department->ID)) {
 				array_push($results_arr, $result);
 			}
 		}

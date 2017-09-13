@@ -14,7 +14,7 @@
 <?php else: ?>
 
 <?php foreach($departments as $dept) : 
-$results = $qr->get_results_for_department($dept); 
+$results = $qr->get_results(); 
 if($has_filter) {
 	$filtered_results = [];
 	foreach($results as $result) {
@@ -27,15 +27,15 @@ if($has_filter) {
 <section class="leo-quiz-results">
 
 <?php if(count($results) == 0 && !$has_filter) : ?>
-	<h3>Sorry, no quiz results for <?php echo $dept['name'];?> yet. Check back later.</h3>
+	<h3>Sorry, no quiz results for <?php echo $dept->post_title;?> yet. Check back later.</h3>
 <?php elseif(count($results) == 0 && $has_filter) : ?>
-	<h3>Sorry, no <span class="quiz-name"><?php echo $quiz_name; ?></span> results for <?php echo $dept['name'];?> yet. Check back later.</h3>
+	<h3>Sorry, no <span class="quiz-name"><?php echo $quiz_name; ?></span> results for <?php echo $dept->post_title;?> yet. Check back later.</h3>
 <?php else : ?>
 
 	<?php if($has_filter) : ?>
-	<h3><span class="quiz-name"><?php echo $quiz_name; ?></span> Results for <?php echo $dept['name'];?></h3>	
+	<h3><span class="quiz-name"><?php echo $quiz_name; ?></span> Results for <?php echo $dept->post_title;?></h3>	
 	<?php else: ?>
-	<h3>Quiz Results for <?php echo $dept['name'];?></h3>	
+	<h3>Quiz Results for <?php echo $dept->post_title;?></h3>	
 	<?php endif; ?>
 
 	<table>

@@ -126,10 +126,12 @@ class Leo_Quiz_Results_Admin {
 	 * @since    1.0.0
 	 */
 	public function show_page() {
-		$qr = new Quiz_Results();
-		$departments = Departments::get_departments();
-		$department = Departments::get_department_by_id($_GET['leo_dept']);
-		$results = $qr->get_results_for_department($department);		
+		$results = [];
+		$departments = Departments::get_departments();	
+		if(isset($_GET['leo_dept'])) {
+			$qr = new Quiz_Results($_GET['leo_dept']);
+			$results = $qr->get_results();
+		}
 		include __DIR__ . '/partials/leo-quiz-results-admin-display.php';
 	}
 }
