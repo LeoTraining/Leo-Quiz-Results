@@ -134,4 +134,21 @@ class Leo_Quiz_Results_Admin {
 		}
 		include __DIR__ . '/partials/leo-quiz-results-admin-display.php';
 	}
+
+	/**
+	 * [export_quiz_results description]
+	 * @return [type] [description]
+	 */
+	public function export_quiz_results() {
+
+		$departmentIds = explode(',', $_GET['depts']);
+		$results = [];
+
+		foreach($departmentIds as $id) {			
+			$results = array_merge($results, (new Quiz_Results($id))->get_results());
+		}
+	
+		$qre = new QuizResultsExporter($results);
+		$qre->export();
+	}
 }

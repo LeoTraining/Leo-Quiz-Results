@@ -120,7 +120,8 @@ class Leo_Quiz_Results {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-leo-quiz-results-public.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-quiz-results.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-departments.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-quiz-results-exporter.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-departments.php';		
 
 		$this->loader = new Leo_Quiz_Results_Loader();
 
@@ -157,7 +158,7 @@ class Leo_Quiz_Results {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'display_admin_page' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'admin_post_export_quiz_results', $plugin_admin, 'export_quiz_results' );
 	}
 
 	/**

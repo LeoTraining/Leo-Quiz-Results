@@ -107,16 +107,17 @@ class Leo_Quiz_Results_Public {
 	public function show_quiz_results() {
 		$user_id = wp_get_current_user()->ID;
 		$is_head = (bool) get_user_meta($user_id, '_is_department_head', true);
-
+		// echo '<pre>'; var_dump(wp_get_current_user()); echo '</pre>'; exit();
 		if($is_head) {
 			ob_start();
+
 			$this->quiz_results_view();
 			$output_string = ob_get_contents();;
 			ob_end_clean();
 
 			return $output_string;			
 		}
-		
+
 		else return '';
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/vendor/autoload.php');
+
 /**
  * The plugin bootstrap file
  *
@@ -72,4 +74,5 @@ function run_leo_quiz_results() {
 	$plugin->run();
 
 }
+
 run_leo_quiz_results();
