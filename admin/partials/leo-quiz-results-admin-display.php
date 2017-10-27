@@ -61,7 +61,7 @@
 	};	
 
 	function updateExportButtonLink() {
-		var base = 'http://leo.dev/wp-admin/admin-post.php?action=export_quiz_results&mtu=';
+		var base = '/wp-admin/admin-post.php?action=export_quiz_results&mtu=';
 		var mtu = $(this).val();
 		var baseText = 'Export Quiz Results';
 
