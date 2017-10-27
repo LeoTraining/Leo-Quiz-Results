@@ -49,7 +49,7 @@ class QuizResultsExporter {
 			$first = sprintf("%s-%s-01", $year, $month);
 			$last = date('Y-m-t', strtotime($first));	
 				
-			$rows[] = (object) [
+			 $row = (object) [
 				'ptbid' => get_user_meta($result['user']->ID, 'ptbid', true),
 				'first' => $result['user']->first_name,
 				'last' => $result['user']->last_name,
@@ -60,8 +60,12 @@ class QuizResultsExporter {
 				'startDate' => $first,
 				'endDate' => $last
 			];
+
+			if(!in_array($row, $rows)) {
+				$rows[] = $row;	
+			}			
 		}
-				
+
 		return $rows;
 	}
 
