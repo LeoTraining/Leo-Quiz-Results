@@ -74,7 +74,7 @@ class Quiz_Results {
 				'score' => $score . ' (' . strval($percent) . '%)',
 				'pass_fail' => $percent < 70 ? 'fail' : 'pass',
 				'timestamp' => date('l, n/j/Y g:i A', strtotime($r->date)),
-				'attempt' => $this->get_attempts($user, $r, $quiz_results),
+				'attempt' => $this->get_attempts($user, $r),
 				'link' => get_site_url() . '/wp-admin/admin.php?page=ipt_fsqm_view_submission&id=' . $r->id,
 				'result' => $r
 				));

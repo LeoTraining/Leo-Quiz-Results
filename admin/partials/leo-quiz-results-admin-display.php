@@ -51,14 +51,24 @@
 
 	<?php endif; ?>
 </section>
-<?php endif; ?>
-
+<?php endif; ?>	
+<input type="text" placeholder="MTU" id="mtu" /><a href="#" class="button" id="mtu-link" target="_blank" style="margin-left: 2em;">Export Quiz Results</a>
 <script type="text/javascript">
 (function($){
+
 	function updateDeptartment() {
 		window.location.search += '&leo_dept=' + $(this).val();
-	};
+	};	
+
+	function updateExportButtonLink() {
+		var base = 'http://leo.dev/wp-admin/admin-post.php?action=export_quiz_results&mtu=';
+		var mtu = $(this).val();
+		var baseText = 'Export Quiz Results';
+
+		$('#mtu-link').attr('href', base + mtu).text(baseText + " for MTU #" + mtu)
+	}
 
 	$('[data-departments]').on('change', updateDeptartment);
+	$('#mtu').on('change keyup', updateExportButtonLink);
 })(jQuery);
 </script>

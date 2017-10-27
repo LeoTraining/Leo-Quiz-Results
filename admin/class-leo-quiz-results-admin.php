@@ -50,10 +50,8 @@ class Leo_Quiz_Results_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -62,21 +60,7 @@ class Leo_Quiz_Results_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Leo_Quiz_Results_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Leo_Quiz_Results_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/leo-quiz-results-admin.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -85,23 +69,8 @@ class Leo_Quiz_Results_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Leo_Quiz_Results_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Leo_Quiz_Results_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/leo-quiz-results-admin.js', array( 'jquery' ), $this->version, false );
-
 	}
-
 
 	/**
 	 * Displays the admin page
@@ -140,12 +109,20 @@ class Leo_Quiz_Results_Admin {
 	 * @return [type] [description]
 	 */
 	public function export_quiz_results() {
+		$mtu = $_GET['mtu'];
 
-		$departmentIds = explode(',', $_GET['depts']);
+		$q = new WP_Query([
+			'post_type' => 'department',
+			'meta_key'     => 'mtu',
+			'meta_value'   => sanitize_text_field($mtu),
+			'meta_compare' => '=',
+			'posts_per_page' => -1
+		]);
+				
 		$results = [];
 
-		foreach($departmentIds as $id) {			
-			$results = array_merge($results, (new Quiz_Results($id))->get_results());
+		foreach($q->posts as $dept) {			
+			$results = array_merge($results, (new Quiz_Results($dept->ID))->get_results());
 		}
 	
 		$qre = new QuizResultsExporter($results);
